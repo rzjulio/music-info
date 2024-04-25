@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RestController

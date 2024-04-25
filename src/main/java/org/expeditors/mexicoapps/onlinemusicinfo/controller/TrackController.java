@@ -1,11 +1,8 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.controller;
 
-import org.expeditors.mexicoapps.onlinemusicinfo.dao.AssociateRecordsImpl;
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.Artist;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaType;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Track;
 import org.expeditors.mexicoapps.onlinemusicinfo.dto.ResponseTracks;
-import org.expeditors.mexicoapps.onlinemusicinfo.service.ArtistService;
 import org.expeditors.mexicoapps.onlinemusicinfo.service.AssociateRecordsService;
 import org.expeditors.mexicoapps.onlinemusicinfo.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;

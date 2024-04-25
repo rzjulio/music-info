@@ -2,10 +2,11 @@ package org.expeditors.mexicoapps.onlinemusicinfo.dao;
 
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaType;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Track;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
@@ -13,8 +14,8 @@ import java.util.function.Predicate;
 @Repository
 public class TrackDaoImpl implements TrackDao{
 
-    private Map<Integer, Track> tracksMap = new ConcurrentHashMap<>();
-    private static AtomicInteger nextId = new AtomicInteger(1);
+    private final Map<Integer, Track> tracksMap = new ConcurrentHashMap<>();
+    private static final AtomicInteger nextId = new AtomicInteger(1);
     @Override
     public Track insert(Track object) {
         object.setId(nextId.getAndIncrement());

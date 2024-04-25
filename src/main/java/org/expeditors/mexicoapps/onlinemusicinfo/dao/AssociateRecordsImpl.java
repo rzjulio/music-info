@@ -11,8 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Repository
 public class AssociateRecordsImpl implements AssociateRecordsDao {
 
-    private Map<Integer, RelTrackArtist> relTrackArtistMap = new ConcurrentHashMap<>();
-    private static AtomicInteger nextId = new AtomicInteger(1);
+    private final Map<Integer, RelTrackArtist> relTrackArtistMap = new ConcurrentHashMap<>();
+    private static final AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
     public List<Integer> findTracksByArtist(int id) {

@@ -1,19 +1,13 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.service;
 
 import org.expeditors.mexicoapps.onlinemusicinfo.dao.ArtistDao;
-import org.expeditors.mexicoapps.onlinemusicinfo.dao.ArtistDaoImpl;
-import org.expeditors.mexicoapps.onlinemusicinfo.dao.AssociateRecordsDao;
-import org.expeditors.mexicoapps.onlinemusicinfo.dao.TrackDao;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Artist;
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.Track;
 import org.expeditors.mexicoapps.onlinemusicinfo.dto.ResponseArtist;
-import org.expeditors.mexicoapps.onlinemusicinfo.dto.ResponseTracks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ArtistService {

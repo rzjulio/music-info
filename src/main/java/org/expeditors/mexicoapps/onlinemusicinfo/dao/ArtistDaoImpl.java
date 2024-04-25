@@ -1,18 +1,19 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.dao;
 
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Artist;
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.Track;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class ArtistDaoImpl implements ArtistDao{
 
-    private Map<Integer, Artist> artistMap = new ConcurrentHashMap<>();
-    private static AtomicInteger nextId = new AtomicInteger(1);
+    private final Map<Integer, Artist> artistMap = new ConcurrentHashMap<>();
+    private static final AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
     public Artist findByName(String name) {

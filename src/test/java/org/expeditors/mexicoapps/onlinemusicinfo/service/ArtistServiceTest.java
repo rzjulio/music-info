@@ -1,8 +1,6 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.service;
 
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Artist;
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaType;
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.Artist;
 import org.expeditors.mexicoapps.onlinemusicinfo.dto.ResponseArtist;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)

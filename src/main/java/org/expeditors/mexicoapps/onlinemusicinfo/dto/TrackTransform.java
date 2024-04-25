@@ -1,6 +1,5 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaType;

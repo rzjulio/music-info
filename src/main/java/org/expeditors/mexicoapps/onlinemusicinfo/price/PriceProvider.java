@@ -1,10 +1,7 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.price;
 
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.Track;
-import org.expeditors.mexicoapps.onlinemusicinfo.dto.ResponseTracks;
 import org.expeditors.mexicoapps.onlinemusicinfo.dto.TrackTransform;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -13,9 +10,9 @@ import java.util.Objects;
 
 @Component
 public class PriceProvider {
-    private RestClient restClient;
+    private final RestClient restClient;
 
-    private String priceUrl;
+    private final String priceUrl;
 
     public PriceProvider() {
         var baseUrl = "http://localhost:8081";
