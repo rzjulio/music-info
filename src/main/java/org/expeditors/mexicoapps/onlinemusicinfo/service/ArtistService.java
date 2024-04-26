@@ -17,8 +17,11 @@ public class ArtistService {
     private AssociateRecordsService associateRecordsService;
 
     public ResponseArtist createArtist(Artist artist) {
-        int idArtist = this.artistDao.insert(artist).getId();
-        return associateRecordsService.getAllTracksByArtist(idArtist);
+        Artist newArtist = this.artistDao.insert(artist);
+        if(newArtist == null){
+            return null;
+        }
+        return associateRecordsService.getAllTracksByArtist(newArtist.getId());
     }
 
     public boolean updateArtist(Artist artist) {
@@ -43,8 +46,11 @@ public class ArtistService {
     }
 
     public ResponseArtist getArtistByName(String name){
-        int idArtist = this.artistDao.findByName(name).getId();
-        return associateRecordsService.getAllTracksByArtist(idArtist);
+        Artist artist = this.artistDao.findByName(name);
+        if(artist==null){
+            return null;
+        }
+        return associateRecordsService.getAllTracksByArtist(artist.getId());
     }
 
     public List<ResponseArtist> getAllArtistsById(List<Integer> id){

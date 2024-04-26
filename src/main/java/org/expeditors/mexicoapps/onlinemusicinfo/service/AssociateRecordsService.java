@@ -26,59 +26,52 @@ public class AssociateRecordsService {
     @Autowired
     private PriceProvider priceProvider;
 
-    public ResponseArtist getAllTracksByArtist(int id) {
-        List<Integer> idsTrack = this.associateRecords.findTracksByArtist(id);
+    public ResponseArtist getAllTracksByArtist(int idArtist) {
+        List<Integer> idsTrack = this.associateRecords.findTracksByArtist(idArtist);
         List<Track> tracks = trackDao.findTracksById(idsTrack);
-        Artist artist = artistDao.findById(id);
-        List<TrackTransform> trackTransforms = new ArrayList<>();
-        tracks.forEach(f->{
-            TrackTransform trackTransform = transformClass(f);
-            priceProvider.setPriceToTrack(trackTransform);
-            trackTransforms.add(trackTransform);
-        });
+        Artist artist = artistDao.findById(idArtist);
+        List<TrackTransform> trackTransforms = tracks.stream().map(this::transformClass).toList();
 
         return new ResponseArtist(artist,trackTransforms);
     }
 
-    public ResponseTracks getAllArtistsByTrack(int id) {
-        List<Integer> idsArtist = this.associateRecords.findArtistsByTrack(id);
+    public ResponseTracks getAllArtistsByTrack(int idTrack) {
+        List<Integer> idsArtist = this.associateRecords.findArtistsByTrack(idTrack);
         List<Artist> artists = artistDao.findArtistsById(idsArtist);
-        Track track = trackDao.findById(id);
+        Track track = trackDao.findById(idTrack);
         if(track!=null){
             TrackTransform trackTransform = transformClass(track);
-            priceProvider.setPriceToTrack(trackTransform);
             return new ResponseTracks(trackTransform,artists);
         }
-        return new ResponseTracks(null,null);
+        return null;
     }
 
     public int createAssociateArtistsToTrack(int idTrack, List<Integer> idsArtist) {
-        if (isNotValidArtist(idsArtist)) {
-            throw new RuntimeException("One or more artists is not existing, please check.");
+        if (isNotValidArtist(idsArtist) || isNotValidTrack(new ArrayList<>(List.of(idTrack)))) {
+            return 0;
         }
 
         return this.associateRecords.associateArtists(idTrack, idsArtist);
     }
 
     public int createAssociateTracksToArtist(int idArtist, List<Integer> idsTrack) {
-        if (isNotValidTrack(idsTrack)) {
-            throw new RuntimeException("One or more tracks is not existing, please check.");
+        if (isNotValidTrack(idsTrack) || isNotValidArtist(new ArrayList<>(List.of(idArtist)))) {
+            return 0;
         }
-
         return this.associateRecords.associateTracks(idArtist, idsTrack);
     }
 
     public boolean deleteAssociateArtistsFromTrack(int idTrack, List<Integer> idsArtist) {
-        if (isNotValidArtist(idsArtist)) {
-            throw new RuntimeException("One or more artists is not existing, please check.");
+        if (isNotValidArtist(idsArtist) || isNotValidTrack(new ArrayList<>(List.of(idTrack)))) {
+            return false;
         }
 
         return this.associateRecords.disAssociateArtists(idTrack, idsArtist);
     }
 
     public boolean deleteAssociateTracksFromArtist(int idArtist, List<Integer> idsTrack) {
-        if (isNotValidTrack(idsTrack)) {
-            throw new RuntimeException("One or more tracks is not existing, please check.");
+        if (isNotValidTrack(idsTrack) || isNotValidArtist(new ArrayList<>(List.of(idArtist)))) {
+            return false;
         }
 
         return this.associateRecords.disAssociateTracks(idArtist, idsTrack);
@@ -93,6 +86,8 @@ public class AssociateRecordsService {
     }
 
     private TrackTransform transformClass(Track track){
-        return new TrackTransform(track.getId(),track.getTitle(),track.getAlbum(),track.getIssueDate(),track.getDuration(),track.getMediaType(),0);
+        TrackTransform trackTransform = new TrackTransform(track.getId(),track.getTitle(),track.getAlbum(),track.getIssueDate(),track.getDuration(),track.getMediaFileType(),0);
+        priceProvider.setPriceToTrack(trackTransform);
+        return trackTransform;
     }
 }

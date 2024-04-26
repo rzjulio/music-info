@@ -1,5 +1,6 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.dao;
 
+import jakarta.validation.Valid;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Artist;
 import org.springframework.stereotype.Repository;
 
@@ -17,11 +18,18 @@ public class ArtistDaoImpl implements ArtistDao{
 
     @Override
     public Artist findByName(String name) {
-        return artistMap.values().stream().filter(f -> f.getName().equals(name)).toList().getFirst();
+        List<Artist> artist = artistMap.values().stream().filter(f -> f.getName().equals(name)).toList();
+        if(artist.isEmpty()){
+            return null;
+        }
+        return artist.getFirst();
     }
 
     @Override
     public Artist insert(Artist object) {
+        if(object == null){
+            return null;
+        }
         object.setId(nextId.getAndIncrement());
         artistMap.put(object.getId(), object);
         return object;

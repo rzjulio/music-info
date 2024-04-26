@@ -1,7 +1,7 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.service;
 
 import org.expeditors.mexicoapps.onlinemusicinfo.dao.TrackDao;
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaType;
+import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaFileType;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Track;
 import org.expeditors.mexicoapps.onlinemusicinfo.dto.ResponseTracks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,11 @@ public class TrackService {
     private AssociateRecordsService associateRecordsService;
 
     public ResponseTracks createTrack(Track track){
-        int idTrack = this.trackDao.insert(track).getId();
-        return associateRecordsService.getAllArtistsByTrack(idTrack);
+        Track newTrack = this.trackDao.insert(track);
+        if(newTrack == null){
+            return null;
+        }
+        return associateRecordsService.getAllArtistsByTrack(newTrack.getId());
     }
 
     public boolean updateTrack(Track track) {
@@ -43,7 +46,11 @@ public class TrackService {
         return transformResponse(this.trackDao.findTracksById(id));
     }
 
-    public List<ResponseTracks> getTracksByMediaType(MediaType value){
+    public List<ResponseTracks> getTracksByMediaType(MediaFileType value){
+        if(value == null){
+            return null;
+        }
+
         List<Track> tracks = this.trackDao.findTracksByAnyField(value.toString(),"mediaType");
         return transformResponse(tracks);
     }

@@ -31,49 +31,13 @@ public class ArtistServiceTest {
     }
 
     @Test
-    public void testAllTracks() {
-        artistService.createArtist(artists.get(0));
-        artistService.createArtist(artists.get(1));
-        List<ResponseArtist> listArtist = artistService.getAllArtist();
-
-        assertEquals(2, listArtist.size());
+    public void createArtistNull() {
+        ResponseArtist newArtist = artistService.createArtist(null);
+        assertNull(newArtist);
     }
 
     @Test
-    public void getTrackWithGoodId() {
-        ResponseArtist newTrack = artistService.createArtist(artists.getFirst());
-
-        ResponseArtist artist = artistService.getArtist(newTrack.getArtist().getId());
-        assertNotNull(artist);
-    }
-
-    @Test
-    public void getTrackWithBadId() {
-        artistService.createArtist(artists.getFirst());
-
-        ResponseArtist artist = artistService.getArtist(10000);
-        assertNull(artist.getArtist());
-    }
-
-    @Test
-    public void deleteTrackWithGoodId() {
-        ResponseArtist newTrack = artistService.createArtist(artists.getFirst());
-        ResponseArtist artist = artistService.getArtist(newTrack.getArtist().getId());
-
-        boolean isDelete = artistService.deleteArtist(artist.getArtist().getId());
-
-        assertTrue(isDelete);
-    }
-
-    @Test
-    public void deleteTrackWithBadId() {
-        boolean isDelete = artistService.deleteArtist(1000);
-
-        assertFalse(isDelete);
-    }
-
-    @Test
-    public void updateTrackWithExistingTrack() {
+    public void updateArtistWithExistingArtist() {
         ResponseArtist newArtist = artistService.createArtist(artists.getFirst());
 
         assertTrue(newArtist.getArtist().getName().contains("Julio"));
@@ -87,8 +51,17 @@ public class ArtistServiceTest {
         assertEquals("The new Julio", newArtist.getArtist().getName());
     }
 
+//    @Test
+//    public void updateArtistWithExistingArtistWithIncorrectFields() {
+//        Artist incorrectArtist = Artist.builder().build();
+//        ResponseArtist newArtist = artistService.createArtist(incorrectArtist);
+//
+//        boolean result = artistService.updateArtist(newArtist.getArtist());
+//        assertFalse(result);
+//    }
+
     @Test
-    public void updateTrackWithNonExistingTrack() {
+    public void updateArtistWithNonExistingArtist() {
         ResponseArtist newArtist = artistService.createArtist(artists.getFirst());
 
         newArtist.getArtist().setId(1000);
@@ -96,5 +69,62 @@ public class ArtistServiceTest {
         boolean result = artistService.updateArtist(newArtist.getArtist());
         assertFalse(result);
 
+    }
+
+    @Test
+    public void deleteArtistWithGoodId() {
+        ResponseArtist newTrack = artistService.createArtist(artists.getFirst());
+        ResponseArtist artist = artistService.getArtist(newTrack.getArtist().getId());
+
+        boolean isDelete = artistService.deleteArtist(artist.getArtist().getId());
+
+        assertTrue(isDelete);
+    }
+
+    @Test
+    public void deleteArtistWithBadId() {
+        boolean isDelete = artistService.deleteArtist(1000);
+
+        assertFalse(isDelete);
+    }
+
+    @Test
+    public void testAllArtist() {
+        artistService.createArtist(artists.get(0));
+        artistService.createArtist(artists.get(1));
+        List<ResponseArtist> listArtist = artistService.getAllArtist();
+
+        assertEquals(2, listArtist.size());
+    }
+
+    @Test
+    public void getArtistWithGoodId() {
+        ResponseArtist newArtist = artistService.createArtist(artists.getFirst());
+
+        ResponseArtist artist = artistService.getArtist(newArtist.getArtist().getId());
+        assertNotNull(artist);
+    }
+
+    @Test
+    public void getArtistWithBadId() {
+        artistService.createArtist(artists.getFirst());
+
+        ResponseArtist artist = artistService.getArtist(10000);
+        assertNull(artist.getArtist());
+    }
+    @Test
+    public void getArtistWithGoodName() {
+        ResponseArtist newArtist = artistService.createArtist(artists.getFirst());
+        ResponseArtist artist = artistService.getArtistByName("Julio");
+        assertNotNull(artist);
+        assertEquals("Julio",artist.getArtist().getName());
+    }
+
+    @Test
+    public void getArtistWithBadName() {
+        artistService.createArtist(artists.getFirst());
+
+        ResponseArtist artist = artistService.getArtistByName("Bad name");
+        assertNull(artist);
     }
 }

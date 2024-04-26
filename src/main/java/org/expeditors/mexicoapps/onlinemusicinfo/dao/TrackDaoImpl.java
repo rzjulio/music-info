@@ -1,6 +1,6 @@
 package org.expeditors.mexicoapps.onlinemusicinfo.dao;
 
-import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaType;
+import org.expeditors.mexicoapps.onlinemusicinfo.domain.MediaFileType;
 import org.expeditors.mexicoapps.onlinemusicinfo.domain.Track;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +18,10 @@ public class TrackDaoImpl implements TrackDao{
     private static final AtomicInteger nextId = new AtomicInteger(1);
     @Override
     public Track insert(Track object) {
+        if(object == null) {
+            return null;
+        }
+
         object.setId(nextId.getAndIncrement());
         tracksMap.put(object.getId(), object);
         return object;
@@ -57,7 +61,7 @@ public class TrackDaoImpl implements TrackDao{
     private static boolean predicates(String field,Track track, String value) {
         switch (field){
             case "mediaType":
-                Predicate<Track> mediaType = (trackPredicate) -> track.getMediaType().equals(MediaType.valueOf(value));
+                Predicate<Track> mediaType = (trackPredicate) -> track.getMediaFileType().equals(MediaFileType.valueOf(value));
                 return mediaType.test(track);
             case "year":
                 Predicate<Track> year = (trackPredicate) -> String.valueOf(track.getIssueDate().getYear()).toLowerCase().equals(value);
