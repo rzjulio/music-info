@@ -63,7 +63,7 @@ public class ArtistController {
 
         URI newResource = uriCreator.getURI(newArtist.getArtist().getId());
 
-        return ResponseEntity.created(newResource).build();
+        return ResponseEntity.created(newResource).body(newArtist);
     }
 
     @DeleteMapping("/{id}")
